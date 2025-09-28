@@ -349,8 +349,8 @@ The script provides colored output:
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/lambda-ecr-repo.git
-cd lambda-ecr-repo
+git clone https://github.com/your-username/blog-ecr.git
+cd blog-ecr
 
 # Set up your configuration
 export AWS_PROFILE=your-development-profile
