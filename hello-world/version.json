@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "description": "Hello World Lambda function with Python 3.13 and ARM64",
+  "python_version": "3.13",
+  "architecture": "arm64",
+  "powertools_layer": true,
+  "repository": {
+    "short_description": "Simple Hello World Lambda function with AWS PowerTools integration",
+    "about": "A demonstration Lambda function that showcases Python 3.13 runtime, ARM64 architecture, and AWS PowerTools for logging, tracing, and metrics. Perfect for testing containerized Lambda deployments.",
+    "usage": "Deploy to AWS Lambda using the container image. Send JSON payload with optional 'name' field. Example: {'name': 'Alice'} returns personalized greeting with function metadata."
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-09-28",
+      "changes": [
+        "Initial hello world lambda function",
+        "Uses Python 3.13 runtime",
+        "ARM64 architecture",
+        "AWS PowerTools layer integration"
+      ]
+    }
+  ]
+}
