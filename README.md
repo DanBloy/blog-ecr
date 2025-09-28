@@ -2,15 +2,17 @@
 
 This repository contains Lambda functions that are automatically built and deployed to Amazon ECR (Elastic Container Registry) for use within your AWS account.
 
+The images are referenced within the [blog](https://bloy.me.uk/)
+
 ## Repository Structure
 
 ```
-├── hello-world/              # Example Lambda function
-│   ├── Dockerfile           # Container definition
-│   ├── lambda_function.py   # Lambda handler code
-│   ├── requirements.txt     # Python dependencies
-│   ├── version.json         # Version information and changelog
-│   └── test_lambda.py       # Local test script
+├── hello-world/            # Example Lambda function
+│   ├── Dockerfile          # Container definition
+│   ├── lambda_function.py  # Lambda handler code
+│   ├── requirements.txt    # Python dependencies
+│   ├── version.json        # Version information and changelog
+│   └── test_lambda.py      # Local test script
 ├── push_to_ecr.sh          # Build and deployment script
 ├── config.example.sh       # Configuration example
 ├── build_state.json        # State tracking (auto-generated, gitignored)
@@ -255,41 +257,6 @@ The function includes sensible defaults but can be customized with these environ
 | `POWERTOOLS_LOGGER_LOG_EVENT` | `false` | Whether to log the incoming event |
 | `POWERTOOLS_TRACE_MIDDLEWARES` | `true` | Enable middleware tracing |
 
-## CI/CD Integration
-
-### GitHub Actions Example
-
-```yaml
-name: Deploy Lambda Functions
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-2
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    
-    - name: Deploy Lambda functions
-      env:
-        AWS_PROFILE: default
-        AWS_REGION: eu-west-2
-      run: |
-        chmod +x push_to_ecr.sh
-        ./push_to_ecr.sh
-```
 
 ## Troubleshooting
 
@@ -326,7 +293,7 @@ The script provides colored output:
 
 ## Cost Optimization
 
-- **Lifecycle Policies**: Automatically applied to keep only the last 10 images
+- **Lifecycle Policies**: Automatically applied to keep only the last 3 images
 - **ARM64 Architecture**: More cost-effective than x86_64 for Lambda
 - **Private ECR**: No data transfer costs within the same region
 
