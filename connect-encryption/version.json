@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "description": "Amazon Connect decryption Lambda using latest AWS Encryption SDK v3.x",
+  "python_version": "3.13",
+  "architecture": "arm64",
+  "powertools_layer": true,
+  "repository": {
+    "short_description": "Amazon Connect encryption handler with AWS PowerTools integration",
+    "about": "A Lambda function that decrypts customer input data from Amazon Connect flows using the latest AWS Encryption SDK v3.x with keyrings and Material Providers Library. Modernized implementation using EncryptionSDKClient, Raw RSA keyrings, and current best practices for Python 3.13.",
+    "usage": "Deploy to AWS Lambda using container image. Uses modern AWS Encryption SDK v3.x pattern: EncryptionSDKClient -> Raw RSA Keyring -> decrypt(). Amazon Connect flow passes 'my-secret-string' (encrypted data) and 'key-id' parameters. Requires private key in Parameter Store."
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-09-28",
+      "changes": [
+        "Initial Amazon Connect encryption lambda function",
+        "Parameter Store integration for private key management",
+        "AWS PowerTools for logging, tracing, and metrics",
+        "Uses Python 3.13 runtime with ARM64 architecture"
+      ]
+    }
+  ]
+}

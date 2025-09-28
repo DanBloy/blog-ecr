@@ -1,0 +1,5 @@
+aws-lambda-powertools[all]==3.20.0
+aws-encryption-sdk==4.0.3
+aws-cryptographic-material-providers==1.11.1
+cryptography>=42.0.0
+boto3>=1.35.42
