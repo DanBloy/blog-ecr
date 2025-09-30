@@ -52,10 +52,15 @@ check_aws_config() {
 
 # Function to authenticate with ECR
 ecr_login() {
+    print_status "Logging into AWS Public ECR (for base images)..."
+    aws ecr-public get-login-password --region us-east-1 --profile $AWS_PROFILE | \
+        docker login --username AWS --password-stdin public.ecr.aws
+    print_success "Public ECR login successful"
+    
     print_status "Logging into private ECR..."
     aws ecr get-login-password --region $AWS_REGION --profile $AWS_PROFILE | \
         docker login --username AWS --password-stdin $ECR_REGISTRY_PREFIX
-    print_success "ECR login successful"
+    print_success "Private ECR login successful"
 }
 
 # Function to load the current state
