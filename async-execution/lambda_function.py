@@ -1,22 +1,23 @@
 import json
 import os
+import time
 from aws_lambda_powertools import Logger, Tracer, Metrics
 from aws_lambda_powertools.logging import correlation_paths
 from aws_lambda_powertools.metrics import MetricUnit
 
 # Initialize PowerTools with sensible defaults
 logger = Logger(
-    service=os.getenv('POWERTOOLS_SERVICE_NAME', 'hello-world-lambda'),
+    service=os.getenv('POWERTOOLS_SERVICE_NAME', 'async-execution-lambda'),
     level=os.getenv('LOG_LEVEL', 'INFO')
 )
 
 tracer = Tracer(
-    service=os.getenv('POWERTOOLS_SERVICE_NAME', 'hello-world-lambda')
+    service=os.getenv('POWERTOOLS_SERVICE_NAME', 'async-execution-lambda')
 )
 
 metrics = Metrics(
-    namespace=os.getenv('POWERTOOLS_METRICS_NAMESPACE', 'HelloWorld'),
-    service=os.getenv('POWERTOOLS_SERVICE_NAME', 'hello-world-lambda')
+    namespace=os.getenv('POWERTOOLS_METRICS_NAMESPACE', 'AsyncExecution'),
+    service=os.getenv('POWERTOOLS_SERVICE_NAME', 'async-execution-lambda')
 )
 
 @tracer.capture_lambda_handler
@@ -24,7 +25,7 @@ metrics = Metrics(
 @metrics.log_metrics
 def lambda_handler(event, context):
     """
-    Hello World Lambda function with AWS PowerTools
+    Async Execution Lambda function that waits for a specified delay before returning
     """
 
     # Log the complete incoming event
@@ -38,18 +39,45 @@ def lambda_handler(event, context):
     })
 
     # Add custom metric
-    metrics.add_metric(name="HelloWorldInvocation", unit=MetricUnit.Count, value=1)
+    metrics.add_metric(name="AsyncExecutionInvocation", unit=MetricUnit.Count, value=1)
 
     # Extract contact information
     contact_data = event.get('Details', {}).get('ContactData', {})
     contact_id = contact_data.get('ContactId', 'unknown')
     
     try:
-        # Extract name from event or use default
-        name = event.get('name', 'World')
+        # Extract SecondsDelay from Amazon Connect Parameters
+        parameters = event.get('Details', {}).get('Parameters', {})
+        seconds_delay = parameters.get('SecondsDelay', 0)
         
-        # Log the processing
-        logger.info(f"Processing hello message for: {name}")
+        # Validate and convert to integer
+        try:
+            seconds_delay = int(seconds_delay)
+            if seconds_delay < 0:
+                seconds_delay = 0
+        except (ValueError, TypeError):
+            logger.warning(f"Invalid SecondsDelay value: {seconds_delay}, defaulting to 0")
+            seconds_delay = 0
+        
+        # Log the delay and check remaining time
+        remaining_time = context.get_remaining_time_in_millis() / 1000
+        logger.info(f"Requested delay: {seconds_delay} seconds, Remaining execution time: {remaining_time:.2f} seconds")
+        
+        # Add delay metric
+        metrics.add_metric(name="ExecutionDelay", unit=MetricUnit.Seconds, value=seconds_delay)
+        
+        # Check if we have enough time
+        if seconds_delay > remaining_time - 1:
+            logger.warning(f"Requested delay ({seconds_delay}s) exceeds available time ({remaining_time:.2f}s)")
+            # Adjust delay to leave 1 second for response
+            seconds_delay = max(0, int(remaining_time - 1))
+            logger.info(f"Adjusted delay to {seconds_delay} seconds")
+        
+        # Wait for the specified duration
+        if seconds_delay > 0:
+            logger.info(f"Starting delay of {seconds_delay} seconds")
+            time.sleep(seconds_delay)
+            logger.info(f"Completed delay of {seconds_delay} seconds")
         
         # Create response
         response = {
@@ -59,7 +87,8 @@ def lambda_handler(event, context):
                 'Access-Control-Allow-Origin': '*'
             },
             'body': json.dumps({
-                'message': f'Hello, {name}!',
+                'message': f'Execution completed after {seconds_delay} seconds',
+                'seconds_delay': seconds_delay,
                 'version': '1.0.0',
                 'runtime': 'python3.13',
                 'architecture': 'arm64',
@@ -73,6 +102,7 @@ def lambda_handler(event, context):
             "response": response,
             "contact_id": contact_id,
             "success": True,
+            "seconds_delay": seconds_delay,
             "remaining_time_ms": context.get_remaining_time_in_millis()
         })
         
@@ -80,6 +110,9 @@ def lambda_handler(event, context):
         
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}", exc_info=True)
+        
+        # Add error metric
+        metrics.add_metric(name="ExecutionError", unit=MetricUnit.Count, value=1)
         
         error_response = {
             'statusCode': 500,

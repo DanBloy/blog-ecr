@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "description": "Async Execution Lambda - waits for specified delay before returning",
+  "runtime": "python3.13",
+  "architecture": "arm64"
+}
