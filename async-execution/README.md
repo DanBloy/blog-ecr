@@ -74,6 +74,8 @@ The lambda accepts a `SecondsDelay` parameter in the Amazon Connect Parameters s
 
 ## Testing
 
+A sample [contact flow](./contact-flow/AsyncExecution.json) is provided, import andf assign a phone numnber.
+
 ### Local Testing
 
 Run the included tests:
@@ -141,7 +143,7 @@ Use the following test event:
 - Metrics are published to CloudWatch under the `AsyncExecution` namespace
 - All executions are fully traced with AWS X-Ray when enabled
 - Logs include detailed information about the delay execution
-- **Remember to set the Lambda timeout in the console to accommodate your maximum expected delay**
+- **Remember to set the Lambda timeout in the console to accommodate your maximum expected delay (Max 60s)**
 
 ## Version History
 
