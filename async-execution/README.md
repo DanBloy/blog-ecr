@@ -74,7 +74,7 @@ The lambda accepts a `SecondsDelay` parameter in the Amazon Connect Parameters s
 
 ## Testing
 
-A sample [contact flow](./contact-flow/AsyncExecution.json) is provided, import andf assign a phone numnber.
+A sample [contact flow](./contact-flow/AsyncExecution.json) is provided, import and assign a phone number.
 
 ### Local Testing
 
