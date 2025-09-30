@@ -1,13 +1,5 @@
-# Use the official AWS Lambda Python 3.13 base image for ARM64
-FROM public.ecr.aws/lambda/python:3.13-arm64
-
-# Set default PowerTools environment variables
-ENV POWERTOOLS_SERVICE_NAME="async-execution-lambda"
-ENV POWERTOOLS_METRICS_NAMESPACE="AsyncExecution"
-ENV LOG_LEVEL="INFO"
-ENV POWERTOOLS_LOGGER_SAMPLE_RATE="0.1"
-ENV POWERTOOLS_LOGGER_LOG_EVENT="false"
-ENV POWERTOOLS_TRACE_MIDDLEWARES="true"
+# Use the official AWS Lambda Python 3.12 base image for ARM64
+FROM public.ecr.aws/lambda/python:3.12-arm64
 
 # Copy requirements and install dependencies
 COPY requirements.txt ${LAMBDA_TASK_ROOT}

@@ -28,10 +28,9 @@ def test_lambda_handler_with_delay():
     
     response = lambda_handler(event, context)
     
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['seconds_delay'] == 2
-    assert 'message' in body
+    assert response['status-code'] == 200
+    assert response['data']['seconds-delay'] == '2'
+    assert 'message' in response['data']
 
 
 def test_lambda_handler_with_integer_delay():
@@ -47,9 +46,8 @@ def test_lambda_handler_with_integer_delay():
     
     response = lambda_handler(event, context)
     
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['seconds_delay'] == 3
+    assert response['status-code'] == 200
+    assert response['data']['seconds-delay'] == '3'
 
 
 def test_lambda_handler_no_delay():
@@ -59,9 +57,8 @@ def test_lambda_handler_no_delay():
     
     response = lambda_handler(event, context)
     
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['seconds_delay'] == 0
+    assert response['status-code'] == 200
+    assert response['data']['seconds-delay'] == '0'
 
 
 def test_lambda_handler_invalid_delay():
@@ -77,9 +74,8 @@ def test_lambda_handler_invalid_delay():
     
     response = lambda_handler(event, context)
     
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['seconds_delay'] == 0
+    assert response['status-code'] == 200
+    assert response['data']['seconds-delay'] == '0'
 
 
 def test_lambda_handler_negative_delay():
@@ -95,9 +91,8 @@ def test_lambda_handler_negative_delay():
     
     response = lambda_handler(event, context)
     
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['seconds_delay'] == 0
+    assert response['status-code'] == 200
+    assert response['data']['seconds-delay'] == '0'
 
 
 def test_lambda_handler_with_contact_data():
@@ -117,9 +112,8 @@ def test_lambda_handler_with_contact_data():
     
     response = lambda_handler(event, context)
     
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['seconds_delay'] == 3
+    assert response['status-code'] == 200
+    assert response['data']['seconds-delay'] == '3'
 
 
 if __name__ == "__main__":

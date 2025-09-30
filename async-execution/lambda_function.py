@@ -81,19 +81,11 @@ def lambda_handler(event, context):
         
         # Create response
         response = {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({
-                'message': f'Execution completed after {seconds_delay} seconds',
-                'seconds_delay': seconds_delay,
-                'version': '1.0.0',
-                'runtime': 'python3.13',
-                'architecture': 'arm64',
-                'powertools': True
-            })
+            'status-code': 200,
+            'data': {
+                'seconds-delay': str(seconds_delay),
+                'message': f'Execution completed after {seconds_delay} seconds'
+            }
         }
 
         # Log the complete outgoing response
@@ -115,15 +107,11 @@ def lambda_handler(event, context):
         metrics.add_metric(name="ExecutionError", unit=MetricUnit.Count, value=1)
         
         error_response = {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({
+            'status-code': 500,
+            'data': {
                 'error': 'Internal server error',
                 'message': str(e)
-            })
+            }
         }
         
         return error_response

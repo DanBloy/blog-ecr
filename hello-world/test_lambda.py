@@ -1,53 +1,86 @@
-#!/usr/bin/env python3
-"""
-Test script for the hello-world Lambda function
-"""
-
 import json
-import sys
-import os
-
-# Add the current directory to the path to import the lambda function
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
+import pytest
 from lambda_function import lambda_handler
 
-def test_hello_world():
-    """Test the hello world lambda function"""
+
+class MockContext:
+    """Mock Lambda context for testing"""
+    def __init__(self):
+        self.function_name = "hello-world-test"
+        self.function_version = "$LATEST"
+        self.aws_request_id = "test-request-id"
+        self.remaining_time_in_millis = 30000  # 30 seconds
     
-    print("Testing hello-world Lambda function...")
-    
-    # Test 1: Default case (no name provided)
-    print("\n1. Testing default case:")
-    event1 = {}
-    context1 = {}
-    
-    result1 = lambda_handler(event1, context1)
-    print(f"Status Code: {result1['statusCode']}")
-    print(f"Response: {result1['body']}")
-    
-    # Test 2: With name provided
-    print("\n2. Testing with name provided:")
-    event2 = {"name": "Daniel"}
-    context2 = {}
-    
-    result2 = lambda_handler(event2, context2)
-    print(f"Status Code: {result2['statusCode']}")
-    print(f"Response: {result2['body']}")
-    
-    # Test 3: With complex event
-    print("\n3. Testing with complex event:")
-    event3 = {
-        "name": "AWS Lambda",
-        "extra_field": "should be ignored"
+    def get_remaining_time_in_millis(self):
+        return self.remaining_time_in_millis
+
+
+def test_lambda_handler_with_name():
+    """Test lambda handler with a name parameter"""
+    event = {
+        "Details": {
+            "Parameters": {
+                "Name": "Alice"
+            }
+        }
     }
-    context3 = {}
+    context = MockContext()
     
-    result3 = lambda_handler(event3, context3)
-    print(f"Status Code: {result3['statusCode']}")
-    print(f"Response: {result3['body']}")
+    response = lambda_handler(event, context)
     
-    print("\nAll tests completed!")
+    assert response['status-code'] == 200
+    assert response['data']['name'] == 'Alice'
+    assert response['data']['message'] == 'Hello, Alice!'
+
+
+def test_lambda_handler_no_name():
+    """Test lambda handler with no name (default 'World')"""
+    event = {}
+    context = MockContext()
+    
+    response = lambda_handler(event, context)
+    
+    assert response['status-code'] == 200
+    assert response['data']['name'] == 'World'
+    assert response['data']['message'] == 'Hello, World!'
+
+
+def test_lambda_handler_with_contact_data():
+    """Test lambda handler with Amazon Connect contact data"""
+    event = {
+        "Details": {
+            "ContactData": {
+                "ContactId": "04535341-6712-4b6d-a710-bf5c5df4ba78"
+            },
+            "Parameters": {
+                "Name": "Bob"
+            }
+        },
+        "Name": "ContactFlowEvent"
+    }
+    context = MockContext()
+    
+    response = lambda_handler(event, context)
+    
+    assert response['status-code'] == 200
+    assert response['data']['name'] == 'Bob'
+    assert response['data']['message'] == 'Hello, Bob!'
+
+
+def test_lambda_handler_empty_parameters():
+    """Test lambda handler with empty parameters"""
+    event = {
+        "Details": {
+            "Parameters": {}
+        }
+    }
+    context = MockContext()
+    
+    response = lambda_handler(event, context)
+    
+    assert response['status-code'] == 200
+    assert response['data']['name'] == 'World'
+
 
 if __name__ == "__main__":
-    test_hello_world()
+    pytest.main([__file__, "-v"])

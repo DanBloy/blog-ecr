@@ -1,0 +1,408 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "6bdf94fc-f196-4768-bcdb-e6aa57b51d2f",
+  "Metadata": {
+    "entryPointPosition": {
+      "x": 40,
+      "y": 40
+    },
+    "ActionMetadata": {
+      "bf201bd3-755a-4d23-8893-c6fb1dae41b5": {
+        "position": {
+          "x": 1712.8,
+          "y": 43.2
+        }
+      },
+      "43d440b8-4586-4bcd-a5c5-27df57607bad": {
+        "position": {
+          "x": 1989.6,
+          "y": 33.6
+        },
+        "parameters": {
+          "PromptId": {
+            "displayName": "CustomerQueue.wav"
+          }
+        },
+        "promptName": "CustomerQueue.wav"
+      },
+      "9fccb36e-f7ad-4c74-9813-48517a53918c": {
+        "position": {
+          "x": 2277.6,
+          "y": 29.6
+        }
+      },
+      "6bdf94fc-f196-4768-bcdb-e6aa57b51d2f": {
+        "position": {
+          "x": 157.6,
+          "y": 39.2
+        }
+      },
+      "a6ff6984-5df9-45ec-ab96-3f40944c880b": {
+        "position": {
+          "x": 902.4,
+          "y": 43.2
+        },
+        "parameters": {
+          "LambdaFunctionARN": {
+            "displayName": "AsyncExecution"
+          },
+          "LambdaInvocationAttributes": {
+            "SecondsDelay": {
+              "useDynamic": true
+            }
+          }
+        },
+        "dynamicMetadata": {
+          "SecondsDelay": true
+        }
+      },
+      "2c033170-1be7-4f82-b82b-64640342b63c": {
+        "position": {
+          "x": 400.8,
+          "y": 40.8
+        }
+      },
+      "b53c4cd5-a71f-431d-be60-174d0df700b7": {
+        "position": {
+          "x": 642.4,
+          "y": 44
+        },
+        "conditionMetadata": [],
+        "countryCodePrefix": "+1"
+      },
+      "935fd559-b965-482b-abed-b9e6f9ac673f": {
+        "position": {
+          "x": 1173.6,
+          "y": 45.6
+        },
+        "parameters": {
+          "TimeLimitSeconds": {
+            "unit": 1
+          },
+          "MinimumWaitTimeSeconds": {
+            "unit": 1
+          }
+        },
+        "timeoutUnit": {
+          "display": "Seconds",
+          "value": "second"
+        }
+      },
+      "7a50a1e3-863a-49cc-88f3-1b4057a8a908": {
+        "position": {
+          "x": 1725.6,
+          "y": 267.2
+        }
+      },
+      "3894341e-abae-44c4-8eaa-00c4861b9ed3": {
+        "position": {
+          "x": 1740,
+          "y": 528.8
+        }
+      },
+      "94222dbd-e0c8-4de8-851e-872aa967d5d9": {
+        "position": {
+          "x": 1745.6,
+          "y": 753.6
+        }
+      },
+      "c9a76b0a-6de9-4534-acf3-3f4ecd3d8513": {
+        "position": {
+          "x": 1431.2,
+          "y": 529.6
+        }
+      }
+    },
+    "Annotations": [
+      {
+        "type": "default",
+        "id": "99c55b5e-728b-444e-8c89-ab2b079cf21f",
+        "content": "AWS Documentation: https://docs.aws.amazon.com/connect/latest/adminguide/invoke-lambda-function-block.html\n\nBlog: https://bloy.me.uk/async-lambda-execution",
+        "actionId": "",
+        "isFolded": false,
+        "position": {
+          "x": -311,
+          "y": 30
+        },
+        "size": {
+          "height": 295,
+          "width": 300
+        }
+      },
+      {
+        "type": "default",
+        "id": "1e488627-0999-44f5-a45f-b2fc341e98d6",
+        "content": "While your lambda is working the \"Continue\" branch is taken.\n\nAs soon as your lambda completes the Lambda returned branch is taken.",
+        "actionId": "",
+        "isFolded": false,
+        "position": {
+          "x": 1425,
+          "y": 372
+        },
+        "size": {
+          "height": 295,
+          "width": 300
+        }
+      },
+      {
+        "type": "default",
+        "id": "285a1f8f-652b-4021-b47e-9d1c0bd818d2",
+        "content": "In this example the \"In progress\" branch is not used, but its a mandatory output. You would use this when not using a \"Wait\" block.",
+        "actionId": "",
+        "isFolded": false,
+        "position": {
+          "x": 1761,
+          "y": 945
+        },
+        "size": {
+          "height": 295,
+          "width": 300
+        }
+      }
+    ],
+    "name": "AsyncExecution",
+    "description": "",
+    "type": "contactFlow",
+    "status": "published",
+    "hash": {}
+  },
+  "Actions": [
+    {
+      "Parameters": {
+        "Text": "Please wait whilst we process your request."
+      },
+      "Identifier": "bf201bd3-755a-4d23-8893-c6fb1dae41b5",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "43d440b8-4586-4bcd-a5c5-27df57607bad",
+        "Errors": [
+          {
+            "NextAction": "43d440b8-4586-4bcd-a5c5-27df57607bad",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "PromptId": "arn:aws:connect:eu-west-2:674248749882:instance/695202c7-24bb-469b-be44-7a0bf91dfd94/prompt/70f883e8-40b7-45d2-931b-38546cac7e1c"
+      },
+      "Identifier": "43d440b8-4586-4bcd-a5c5-27df57607bad",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+        "Errors": [
+          {
+            "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {},
+      "Identifier": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+      "Type": "DisconnectParticipant",
+      "Transitions": {}
+    },
+    {
+      "Parameters": {
+        "FlowLoggingBehavior": "Enabled"
+      },
+      "Identifier": "6bdf94fc-f196-4768-bcdb-e6aa57b51d2f",
+      "Type": "UpdateFlowLoggingBehavior",
+      "Transitions": {
+        "NextAction": "2c033170-1be7-4f82-b82b-64640342b63c"
+      }
+    },
+    {
+      "Parameters": {
+        "LambdaFunctionARN": "arn:aws:lambda:eu-west-2:674248749882:function:AsyncExecution",
+        "InvocationTimeLimitSeconds": "60",
+        "InvocationType": "ASYNCHRONOUS",
+        "LambdaInvocationAttributes": {
+          "SecondsDelay": "$.StoredCustomerInput"
+        },
+        "ResponseValidation": {
+          "ResponseType": "JSON"
+        }
+      },
+      "Identifier": "a6ff6984-5df9-45ec-ab96-3f40944c880b",
+      "Type": "InvokeLambdaFunction",
+      "Transitions": {
+        "NextAction": "935fd559-b965-482b-abed-b9e6f9ac673f",
+        "Errors": [
+          {
+            "NextAction": "935fd559-b965-482b-abed-b9e6f9ac673f",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "This flow is used to demonstrate how the asyncronous lambda execution works. "
+      },
+      "Identifier": "2c033170-1be7-4f82-b82b-64640342b63c",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "b53c4cd5-a71f-431d-be60-174d0df700b7",
+        "Errors": [
+          {
+            "NextAction": "b53c4cd5-a71f-431d-be60-174d0df700b7",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "StoreInput": "True",
+        "InputTimeLimitSeconds": "5",
+        "Text": "Enter the number of seconds, between and 1 and 60, you'd like the lambda to wait before returning.",
+        "DTMFConfiguration": {
+          "DisableCancelKey": "False",
+          "InterdigitTimeLimitSeconds": "5"
+        },
+        "InputValidation": {
+          "CustomValidation": {
+            "MaximumLength": "2"
+          }
+        }
+      },
+      "Identifier": "b53c4cd5-a71f-431d-be60-174d0df700b7",
+      "Type": "GetParticipantInput",
+      "Transitions": {
+        "NextAction": "a6ff6984-5df9-45ec-ab96-3f40944c880b",
+        "Errors": [
+          {
+            "NextAction": "a6ff6984-5df9-45ec-ab96-3f40944c880b",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "TimeLimitSeconds": "60",
+        "ContinueExecution": "TRUE",
+        "InterruptibleEvents": {
+          "LambdaReturned": {
+            "AsyncLambdaCompletionEvent": {
+              "Identifier": "$.LambdaInvocation.InvocationId"
+            }
+          }
+        },
+        "MinimumWaitTimeSeconds": "1"
+      },
+      "Identifier": "935fd559-b965-482b-abed-b9e6f9ac673f",
+      "Type": "Wait",
+      "Transitions": {
+        "NextAction": "7a50a1e3-863a-49cc-88f3-1b4057a8a908",
+        "Conditions": [
+          {
+            "NextAction": "bf201bd3-755a-4d23-8893-c6fb1dae41b5",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "Continue"
+              ]
+            }
+          },
+          {
+            "NextAction": "c9a76b0a-6de9-4534-acf3-3f4ecd3d8513",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "LambdaReturned"
+              ]
+            }
+          },
+          {
+            "NextAction": "7a50a1e3-863a-49cc-88f3-1b4057a8a908",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "WaitCompleted"
+              ]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "NextAction": "7a50a1e3-863a-49cc-88f3-1b4057a8a908",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "There was an error. Goodbye"
+      },
+      "Identifier": "7a50a1e3-863a-49cc-88f3-1b4057a8a908",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+        "Errors": [
+          {
+            "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "Your request has completed successfully. Goodbye"
+      },
+      "Identifier": "3894341e-abae-44c4-8eaa-00c4861b9ed3",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+        "Errors": [
+          {
+            "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "Text": "Your request is still in progress, Goodbye"
+      },
+      "Identifier": "94222dbd-e0c8-4de8-851e-872aa967d5d9",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+        "Errors": [
+          {
+            "NextAction": "9fccb36e-f7ad-4c74-9813-48517a53918c",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "LambdaInvocationId": "$.LambdaInvocation.InvocationId"
+      },
+      "Identifier": "c9a76b0a-6de9-4534-acf3-3f4ecd3d8513",
+      "Type": "LoadLambdaFunctionResult",
+      "Transitions": {
+        "NextAction": "3894341e-abae-44c4-8eaa-00c4861b9ed3",
+        "Errors": [
+          {
+            "NextAction": "7a50a1e3-863a-49cc-88f3-1b4057a8a908",
+            "ErrorType": "NoMatchingError"
+          },
+          {
+            "NextAction": "94222dbd-e0c8-4de8-851e-872aa967d5d9",
+            "ErrorType": "InProgress"
+          }
+        ]
+      }
+    }
+  ]
+}

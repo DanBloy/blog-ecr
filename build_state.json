@@ -1,14 +1,14 @@
 {
   "hello-world": {
-    "version": "1.0.1",
-    "last_build": "2025-09-30T17:10:15Z"
+    "version": "1.1.0",
+    "last_build": "2025-09-30T18:08:09Z"
   },
   "connect-encryption": {
     "version": "1.0.0",
     "last_build": "2025-09-28T16:52:22Z"
   },
   "async-execution": {
-    "version": "1.0.0",
-    "last_build": "2025-09-30T17:10:36Z"
+    "version": "1.1.0",
+    "last_build": "2025-09-30T18:08:34Z"
   }
 }

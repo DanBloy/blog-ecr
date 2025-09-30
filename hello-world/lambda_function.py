@@ -45,26 +45,20 @@ def lambda_handler(event, context):
     contact_id = contact_data.get('ContactId', 'unknown')
     
     try:
-        # Extract name from event or use default
-        name = event.get('name', 'World')
+        # Extract Name from Amazon Connect Parameters
+        parameters = event.get('Details', {}).get('Parameters', {})
+        name = parameters.get('Name', 'World')
         
         # Log the processing
         logger.info(f"Processing hello message for: {name}")
         
         # Create response
         response = {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({
-                'message': f'Hello, {name}!',
-                'version': '1.0.0',
-                'runtime': 'python3.13',
-                'architecture': 'arm64',
-                'powertools': True
-            })
+            'status-code': 200,
+            'data': {
+                'name': name,
+                'message': f'Hello, {name}!'
+            }
         }
 
         # Log the complete outgoing response
@@ -82,15 +76,11 @@ def lambda_handler(event, context):
         logger.error(f"Error processing request: {str(e)}", exc_info=True)
         
         error_response = {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({
+            'status-code': 500,
+            'data': {
                 'error': 'Internal server error',
                 'message': str(e)
-            })
+            }
         }
         
         return error_response

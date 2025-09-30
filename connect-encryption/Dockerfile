@@ -1,17 +1,6 @@
 # Use the official AWS Lambda Python 3.13 base image for ARM64
 FROM public.ecr.aws/lambda/python:3.13-arm64
 
-# Set default PowerTools environment variables
-ENV POWERTOOLS_SERVICE_NAME="connect-encryption-lambda"
-ENV POWERTOOLS_METRICS_NAMESPACE="ConnectEncryption"
-ENV LOG_LEVEL="INFO"
-ENV POWERTOOLS_LOGGER_SAMPLE_RATE="0.1"
-ENV POWERTOOLS_LOGGER_LOG_EVENT="false"
-ENV POWERTOOLS_TRACE_MIDDLEWARES="true"
-
-# Set AWS region (can be overridden at runtime)
-ENV AWS_REGION="eu-west-2"
-
 # Copy requirements and install dependencies
 COPY requirements.txt ${LAMBDA_TASK_ROOT}
 RUN pip install -r requirements.txt
